@@ -1,0 +1,332 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+// Custom Material 3 Dark Theme configuration using modern SCSS syntax.
+// We override styles to use our exact palette.
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+  ),
+  typography: (
+    brand-family: 'Inter',
+    plain-family: 'Inter',
+  )
+));
+
+html {
+  @include mat.all-component-themes($dark-theme);
+}
+
+// Define custom CSS variables for our specific design tokens
+:root {
+  --bg-sidenav: #12151c;
+  --bg-main: #0f1117;
+  --bg-card: #20242f;
+  --border-color: #2a2f3c;
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+  --primary-accent: #f59e0b;
+  --primary-accent-hover: #d97706;
+
+  // Status Colors
+  --status-green: #22c55e;
+  --status-blue: #3b82f6;
+  --status-orange: #f59e0b;
+  --status-red: #ef4444;
+
+  // Background statuses (semi-transparent for chips/badges)
+  --status-green-bg: rgba(34, 197, 94, 0.15);
+  --status-blue-bg: rgba(59, 130, 246, 0.15);
+  --status-orange-bg: rgba(245, 158, 11, 0.15);
+  --status-red-bg: rgba(239, 68, 68, 0.15);
+
+  --font-family: 'Inter', sans-serif;
+  --card-radius: 10px;
+  --transition-speed: 0.25s;
+}
+
+// Reset and Base Styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Beautiful Dark Scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+// Global Custom Layout Utilities
+.grid-container {
+  display: grid;
+  gap: 20px;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-cols-6 {
+  grid-template-columns: repeat(6, 1fr);
+  @media (max-width: 1600px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// UI Components Polish (Glassmorphism + Flat Dark)
+.custom-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+
+  &.hoverable:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-accent);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  }
+}
+
+// Status Badges/Chips
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  // Dot marker
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  &.status-green {
+    background-color: var(--status-green-bg);
+    color: var(--status-green);
+    &::before { background-color: var(--status-green); }
+  }
+
+  &.status-blue {
+    background-color: var(--status-blue-bg);
+    color: var(--status-blue);
+    &::before { background-color: var(--status-blue); }
+  }
+
+  &.status-orange {
+    background-color: var(--status-orange-bg);
+    color: var(--status-orange);
+    &::before { background-color: var(--status-orange); }
+  }
+
+  &.status-red {
+    background-color: var(--status-red-bg);
+    color: var(--status-red);
+    &::before { background-color: var(--status-red); }
+  }
+}
+
+// Typography Helper Classes
+.text-muted {
+  color: var(--text-secondary);
+}
+
+.text-primary-color {
+  color: var(--text-primary);
+}
+
+.text-accent {
+  color: var(--primary-accent);
+}
+
+// Micro-animations
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+// Angular Material Dark Component Overrides
+.mat-mdc-table {
+  background: transparent !important;
+  width: 100%;
+}
+
+.mat-mdc-header-row {
+  background-color: rgba(22, 26, 35, 0.5) !important;
+  border-bottom: 2px solid var(--border-color) !important;
+}
+
+.mat-mdc-header-cell {
+  color: var(--text-secondary) !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mat-mdc-row {
+  border-bottom: 1px solid var(--border-color) !important;
+  transition: background-color var(--transition-speed) ease;
+  &:hover {
+    background-color: rgba(42, 47, 60, 0.3) !important;
+  }
+}
+
+.mat-mdc-cell {
+  color: var(--text-primary) !important;
+  font-size: 0.9rem !important;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+// Custom Accent Buttons (override default Material primary buttons to match orange/amber accent)
+.btn-accent {
+  background-color: var(--primary-accent) !important;
+  color: #12151c !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  letter-spacing: 0.02em;
+  transition: background-color var(--transition-speed) ease !important;
+
+  &:hover:not([disabled]) {
+    background-color: var(--primary-accent-hover) !important;
+  }
+
+  &[disabled] {
+    opacity: 0.5 !important;
+    background-color: var(--border-color) !important;
+    color: var(--text-secondary) !important;
+  }
+}
+
+// Secondary Outlined Buttons
+.btn-secondary {
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  background-color: transparent !important;
+  border-radius: 6px !important;
+  transition: all var(--transition-speed) ease !important;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-color: var(--text-secondary) !important;
+  }
+}
+
+// Custom Stepper/Wizard Styles
+.mat-stepper-horizontal {
+  background: transparent !important;
+}
+
+.mat-step-header {
+  border-radius: 6px !important;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+  }
+}
+
+.mat-step-icon {
+  background-color: var(--border-color) !important;
+  color: var(--text-secondary) !important;
+
+  &.mat-step-icon-selected, &.mat-step-icon-state-edit {
+    background-color: var(--primary-accent) !important;
+    color: #12151c !important;
+  }
+}
+
+.mat-step-label {
+  color: var(--text-secondary) !important;
+  &.mat-step-label-active {
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+  }
+}

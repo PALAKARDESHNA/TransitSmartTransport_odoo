@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "npm start --prefix frontend"
+  },
+  "dependencies": {
+    "@angular/cdk": "^22.0.4",
+    "@angular/material": "^22.0.4"
+  }
+}
